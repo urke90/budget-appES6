@@ -3,6 +3,7 @@ import {
   DOMstrings,
   addListItemToDOM,
   clearInputFields,
+  displayBudget,
 } from "./UIController.js";
 import { addItem, calculateBudget, getBudgetData } from "./budgetController.js";
 
@@ -13,8 +14,9 @@ const updateBudget = () => {
   calculateBudget();
   // 2. Return the budget
   const budgetData = getBudgetData();
-  console.log(budgetData);
+  //console.log(budgetData);
   // 3. Display the budget on UI
+  displayBudget(budgetData);
 };
 
 // get input values check them create new income/expense, send the data to UIcontroller clear fields, updateBudget
@@ -61,5 +63,11 @@ const setupEventListeners = () => {
 
 export const init = () => {
   setupEventListeners();
+  displayBudget({
+    totalBudget: 0,
+    totalInc: 0,
+    totalExp: 0,
+    percentage: "---",
+  });
   console.log("app started");
 };

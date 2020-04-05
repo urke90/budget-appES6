@@ -6,6 +6,10 @@ export const DOMstrings = {
   inputEnterValue: ".add__btn",
   incomeListItemContainer: ".income__list",
   expenseListItemContainer: ".expenses__list",
+  totalBudgetLabel: ".budget__value",
+  totalIncomeLabel: ".budget__income--value",
+  totalExpenseLabel: ".budget__expenses--value",
+  totalPercentageLabel: ".budget__expenses--percentage",
 };
 
 // gets inupt values for type( expense, income ), description, and amount
@@ -69,4 +73,22 @@ export const clearInputFields = () => {
     inputField.value = "";
   });
   inputs[0].focus();
+};
+
+export const displayBudget = (dataObj) => {
+  console.log(dataObj);
+  document.querySelector(DOMstrings.totalBudgetLabel).textContent =
+    dataObj.totalBudget;
+  document.querySelector(DOMstrings.totalIncomeLabel).textContent =
+    dataObj.totalInc;
+  document.querySelector(DOMstrings.totalExpenseLabel).textContent =
+    dataObj.totalExp;
+
+  if (dataObj.percentage > 0) {
+    document.querySelector(
+      DOMstrings.totalPercentageLabel
+    ).textContent = `${dataObj.percentage}%`;
+  } else {
+    document.querySelector(DOMstrings.totalPercentageLabel).textContent = "---";
+  }
 };
