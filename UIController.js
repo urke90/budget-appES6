@@ -9,11 +9,11 @@ export const DOMstrings = {
 };
 
 // gets inupt values for type( expense, income ), description, and amount
-export const getInput = () => {
+export const getInputValues = () => {
   // select the input elements and get the value
   const type = document.querySelector(DOMstrings.inputType).value;
   const description = document.querySelector(DOMstrings.inputDescription).value;
-  const value = document.querySelector(DOMstrings.inputValue).value;
+  const value = parseFloat(document.querySelector(DOMstrings.inputValue).value);
 
   return {
     type,
