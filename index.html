@@ -120,8 +120,12 @@
         </div>
       </div>
     </div>
-    <script type="module" src="app.js">
+    <script type="module">
       import { init } from "./app.js";
+      import { Expense } from "./budgetController.js";
+      let exp = new Expense(1, "des", 1000);
+      let bla = "uros";
+      console.log(exp);
       init();
     </script>
   </body>
