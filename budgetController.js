@@ -24,6 +24,8 @@ export const data = {
     exp: 0,
     inc: 0,
   },
+  totalBudget: 0,
+  percentage: -1,
 };
 // function that creates new expense or income object
 export const addItem = (type, des, val) => {
@@ -50,4 +52,35 @@ export const addItem = (type, des, val) => {
   // push the income/expense object to the data.allItems exp/inc
   data.allItems[type].push(newItem);
   return newItem;
+};
+// calculate total income or expense
+const calculateTotal = (type) => {
+  let sum = 0;
+
+  data.allItems[type].forEach((current) => {
+    sum += current.value;
+  });
+
+  data.totals[type] = sum;
+};
+
+export const calculateBudget = () => {
+  // 1. calculate total income and expenses
+  calculateTotal("inc");
+  calculateTotal("exp");
+  // 2. Calculate the budget: income - expenses
+  data.totalBudget = data.totals["inc"] - data.totals["exp"];
+  // 3. calculate the percentage of income that we spent
+  if (data.totals.inc > 0) {
+    data.percentage = Math.round((data.totals.exp / data.totals.inc) * 100);
+  }
+};
+
+export const getBudgetData = () => {
+  return {
+    totalBudget: data.totalBudget,
+    totalInc: data.totals.inc,
+    totalExp: data.totals.exp,
+    percentage: data.percentage,
+  };
 };

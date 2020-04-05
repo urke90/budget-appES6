@@ -4,13 +4,20 @@ import {
   addListItemToDOM,
   clearInputFields,
 } from "./UIController.js";
-import { addItem } from "./budgetController.js";
+import { addItem, calculateBudget, getBudgetData } from "./budgetController.js";
 
 // GLOBAL APP CONTROLLER
 
-const updateBudget = () => {};
+const updateBudget = () => {
+  // 1. Calculate Budget
+  calculateBudget();
+  // 2. Return the budget
+  const budgetData = getBudgetData();
+  console.log(budgetData);
+  // 3. Display the budget on UI
+};
 
-//
+// get input values check them create new income/expense, send the data to UIcontroller clear fields, updateBudget
 const ctrlAddItem = () => {
   //   console.log("ctrlAddItem");
 
