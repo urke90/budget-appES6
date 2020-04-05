@@ -1,3 +1,4 @@
+// created DOM strings so when we change some class in HTML we need to change it only in here
 export const DOMstrings = {
   inputType: ".add__type",
   inputDescription: ".add__description",
@@ -5,6 +6,7 @@ export const DOMstrings = {
   inputEnterValue: ".add__btn",
 };
 
+// gets inupt values for type( expense, income ), description, and amount
 export const getInput = () => {
   // select the input elements and get the value
   const type = document.querySelector(DOMstrings.inputType).value;
@@ -16,9 +18,4 @@ export const getInput = () => {
     description,
     value,
   };
-  //   return {
-  //     type: document.querySelector(".add__type").value,
-  //     desription: document.querySelector(".add__description").value,
-  //     value: document.querySelector(".add__value").value,
-  //   };
 };
