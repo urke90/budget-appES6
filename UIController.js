@@ -1,12 +1,19 @@
+export const DOMstrings = {
+  inputType: ".add__type",
+  inputDescription: ".add__description",
+  inputValue: ".add__value",
+  inputEnterValue: ".add__btn",
+};
+
 export const getInput = () => {
   // select the input elements and get the value
-  let type = document.querySelector(".add__type").value;
-  let desription = document.querySelector(".add__description").value;
-  let value = document.querySelector(".add__value").value;
+  const type = document.querySelector(DOMstrings.inputType).value;
+  const description = document.querySelector(DOMstrings.inputDescription).value;
+  const value = document.querySelector(DOMstrings.inputValue).value;
 
   return {
     type,
-    desription,
+    description,
     value,
   };
   //   return {
