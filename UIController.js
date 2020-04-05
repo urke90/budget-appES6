@@ -23,8 +23,6 @@ export const getInput = () => {
 };
 
 export const addListItemToDOM = (object, type) => {
-  console.log(object);
-  //console.log(type);
   let html, incomeExpenseContainer;
 
   // create HTML structure for income cards and set container for cards to be .income__list
@@ -60,4 +58,15 @@ export const addListItemToDOM = (object, type) => {
   }
   //console.log(incomeExpenseContainer);
   document.querySelector(incomeExpenseContainer).innerHTML += html;
+};
+// clearing input fields when income/expense item is added
+export const clearInputFields = () => {
+  // select all input fields, loop through them, and clear value after income/expense item is added
+  const inputs = document.querySelectorAll(
+    `${DOMstrings.inputDescription}, ${DOMstrings.inputValue}`
+  );
+  inputs.forEach((inputField) => {
+    inputField.value = "";
+  });
+  inputs[0].focus();
 };
