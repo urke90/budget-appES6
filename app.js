@@ -1,8 +1,5 @@
 import { getInput, DOMstrings } from "./UIController.js";
 
-const DOM = DOMstrings;
-console.log(DOM);
-
 // GLOBAL APP CONTROLLER
 
 const ctrlAddItem = () => {
@@ -16,12 +13,20 @@ const ctrlAddItem = () => {
   // 4. Calculate the budget
 };
 
-document
-  .querySelector(DOM.inputEnterValue)
-  .addEventListener("click", ctrlAddItem);
+const setupEventListeners = () => {
+  const DOM = DOMstrings;
+  document
+    .querySelector(DOM.inputEnterValue)
+    .addEventListener("click", ctrlAddItem);
 
-document.addEventListener("keypress", (event) => {
-  if (event.keyCode == 13 || event.which == 13) {
-    ctrlAddItem();
-  }
-});
+  document.addEventListener("keypress", (event) => {
+    if (event.keyCode == 13 || event.which == 13) {
+      ctrlAddItem();
+    }
+  });
+};
+
+export const init = () => {
+  setupEventListeners();
+  console.log("app started");
+};
