@@ -1,4 +1,4 @@
-import { getInput, DOMstrings } from "./UIController.js";
+import { getInput, DOMstrings, addListItemToDOM } from "./UIController.js";
 import { addItem } from "./budgetController.js";
 // GLOBAL APP CONTROLLER
 
@@ -15,8 +15,9 @@ const ctrlAddItem = () => {
     inputData.description,
     inputData.value
   );
-  console.log(newItem);
+  //console.log(newItem);
   // 3. Add the item to the UI
+  addListItemToDOM(newItem, inputData.type);
   // 4. Calculate the budget
 };
 
