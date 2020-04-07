@@ -10,6 +10,7 @@ export const DOMstrings = {
   totalIncomeLabel: ".budget__income--value",
   totalExpenseLabel: ".budget__expenses--value",
   totalPercentageLabel: ".budget__expenses--percentage",
+  container: ".container",
 };
 
 // gets inupt values for type( expense, income ), description, and amount
@@ -33,12 +34,12 @@ export const addListItemToDOM = (object, type) => {
   if (type == "inc") {
     incomeExpenseContainer = DOMstrings.incomeListItemContainer;
     html = `
-          <div class="item clearfix" id="income-${object.id}">
+          <div class="item clearfix" id="inc-${object.id}">
             <div class="item__description">${object.description}</div>
             <div class="right clearfix">
               <div class="item__value">${object.value}</div>
                 <div class="item__delete">
-                  <button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button>
+                  <button class="item__delete--btn"><i class="ion-ios-close-outline inc-${object.id}"></i></button>
                 </div>
             </div>
           </div>
@@ -48,19 +49,18 @@ export const addListItemToDOM = (object, type) => {
   else if (type == "exp") {
     incomeExpenseContainer = DOMstrings.expenseListItemContainer;
     html = `
-          <div class="item clearfix" id="expense-${object.id}">
+          <div class="item clearfix"id="exp-${object.id}">
             <div class="item__description">${object.description}</div>
             <div class="right clearfix">
               <div class="item__value">${object.value}</div>
               <div class="item__percentage">21%</div>
               <div class="item__delete">
-                <button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button>
+                <button  class="item__delete--btn"><i class="ion-ios-close-outline exp-${object.id}"></i></button>
               </div>
             </div>
           </div>
            `;
   }
-  //console.log(incomeExpenseContainer);
   document.querySelector(incomeExpenseContainer).innerHTML += html;
 };
 // clearing input fields when income/expense item is added
@@ -74,9 +74,8 @@ export const clearInputFields = () => {
   });
   inputs[0].focus();
 };
-
+// display budget to the UI
 export const displayBudget = (dataObj) => {
-  console.log(dataObj);
   document.querySelector(DOMstrings.totalBudgetLabel).textContent =
     dataObj.totalBudget;
   document.querySelector(DOMstrings.totalIncomeLabel).textContent =
@@ -91,4 +90,10 @@ export const displayBudget = (dataObj) => {
   } else {
     document.querySelector(DOMstrings.totalPercentageLabel).textContent = "---";
   }
+};
+
+// delete the exp inc item from the UI
+export const deleteIncomeExpenseUIItemHandler = (id) => {
+  const element = document.querySelector(`#${id}`);
+  element.parentNode.removeChild(element);
 };
