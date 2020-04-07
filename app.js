@@ -4,8 +4,15 @@ import {
   addListItemToDOM,
   clearInputFields,
   displayBudget,
+  deleteIncomeExpenseUIItemHandler,
 } from "./UIController.js";
-import { addItem, calculateBudget, getBudgetData } from "./budgetController.js";
+import {
+  addItem,
+  calculateBudget,
+  getBudgetData,
+  deleteIncomeExpenseBudgetItemHandler,
+  data,
+} from "./budgetController.js";
 
 // GLOBAL APP CONTROLLER
 
@@ -17,15 +24,13 @@ const updateBudget = () => {
   //console.log(budgetData);
   // 3. Display the budget on UI
   displayBudget(budgetData);
+  console.log(data);
 };
 
 // get input values check them create new income/expense, send the data to UIcontroller clear fields, updateBudget
-const ctrlAddItem = () => {
-  //   console.log("ctrlAddItem");
-
+const ctrlAddItemHandler = () => {
   // 1. Get the field input data
   const inputData = getInputValues();
-  console.log(inputData);
 
   if (
     inputData.description !== "" &&
@@ -48,21 +53,47 @@ const ctrlAddItem = () => {
   }
 };
 
-const setupEventListeners = () => {
-  const DOM = DOMstrings;
-  document
-    .querySelector(DOM.inputEnterValue)
-    .addEventListener("click", ctrlAddItem);
+// setup handler for deleteting Item
+const ctrlDeleteItemHandler = (event) => {
+  console.log(event);
+  if (
+    event.target.className.includes("inc") ||
+    event.target.className.includes("exp")
+  ) {
+    const selectedElement = event.target.classList[1];
+    console.log(selectedElement);
+    const selectedElementSplited = event.target.className
+      .split(" ")[1]
+      .split("-");
+    const type = selectedElementSplited[0];
+    const id = parseInt(selectedElementSplited[1]);
 
-  document.addEventListener("keypress", (event) => {
-    if (event.keyCode == 13 || event.which == 13) {
-      ctrlAddItem();
-    }
-  });
+    // 1. delete the item fom budget controller
+    deleteIncomeExpenseBudgetItemHandler(type, id);
+    // 2. delete the item from UI controller
+    deleteIncomeExpenseUIItemHandler(selectedElement);
+    // 3. Update and show the new budget
+    updateBudget();
+  }
 };
 
+// setup keypress and click listeners for adding and delteting items
+document
+  .querySelector(DOMstrings.inputEnterValue)
+  .addEventListener("click", ctrlAddItemHandler);
+
+document.addEventListener("keypress", (event) => {
+  if (event.keyCode == 13 || event.which == 13) {
+    ctrlAddItemHandler();
+  }
+});
+
+document
+  .querySelector(DOMstrings.container)
+  .addEventListener("click", ctrlDeleteItemHandler);
+
+// init function, reset budget
 export const init = () => {
-  setupEventListeners();
   displayBudget({
     totalBudget: 0,
     totalInc: 0,
