@@ -69,13 +69,10 @@ const ctrlAddItemHandler = () => {
 // setup handler for deleteting Item
 const ctrlDeleteItemHandler = (event) => {
   console.log(event);
-  if (
-    event.target.className.includes("inc") ||
-    event.target.className.includes("exp")
-  ) {
+  if (event.target.hasAttribute("data-type")) {
     //const selectedElement = event.target.classList[1];
     //console.log(selectedElement);
-    //const selectedElementSplited = event.target.className
+    //const selectedElementSplited = event.target.cgitlassName
     //.split(" ")[1]
     //.split("-");
     //const type = selectedElementSplited[0];
