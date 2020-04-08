@@ -12,6 +12,7 @@ export const DOMstrings = {
   totalPercentageLabel: ".budget__expenses--percentage",
   container: ".container",
   expensePercentageLabel: ".item__percentage",
+  dateLabel: ".budget__title--month",
 };
 
 // gets inupt values for type( expense, income ), description, and amount
@@ -27,7 +28,7 @@ export const getInputValues = () => {
     value,
   };
 };
-
+// Adds expense/income item to the DOM
 export const addListItemToDOM = (object, type) => {
   let html, incomeExpenseContainer;
 
@@ -128,7 +129,7 @@ export const displayPercentagesUI = (percentages) => {
     }
   });
 };
-
+// format income expense values
 const formatIncExpValue = (num, type) => {
   /*
   + or - before number
@@ -157,4 +158,25 @@ const formatIncExpValue = (num, type) => {
   //return `${type} ${int},${decPart}`;
 
   return `${type === "exp" ? "-" : "+"} ${intPart}.${decPart}`;
+};
+// diplay accurate date on the UI
+export const displayAccurateDate = () => {
+  const now = new Date();
+  const year = now.getFullYear();
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  const month = months[now.getMonth()];
+  document.querySelector(DOMstrings.dateLabel).innerHTML = `${month} ${year}`;
 };

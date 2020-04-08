@@ -6,6 +6,7 @@ import {
   displayBudget,
   deleteIncomeExpenseUIItemHandler,
   displayPercentagesUI,
+  displayAccurateDate,
 } from "./UIController.js";
 import {
   addItem,
@@ -70,13 +71,17 @@ const ctrlAddItemHandler = () => {
 const ctrlDeleteItemHandler = (event) => {
   console.log(event);
   if (event.target.hasAttribute("data-type")) {
+    // GET TYPE AND ID WITH
+
     //const selectedElement = event.target.classList[1];
     //console.log(selectedElement);
-    //const selectedElementSplited = event.target.cgitlassName
+    //const selectedElementSplited = event.target.className
     //.split(" ")[1]
     //.split("-");
     //const type = selectedElementSplited[0];
     //const id = parseInt(selectedElementSplited[1]);
+
+    //GET TYPE AND ID USING getAttribute
     const type = event.target.getAttribute("data-type");
     const id = event.target.getAttribute("data-id");
     // 1. delete the item fom budget controller
@@ -107,6 +112,7 @@ document
 
 // init function, reset budget
 export const init = () => {
+  displayAccurateDate();
   displayBudget({
     totalBudget: 0,
     totalInc: 0,
