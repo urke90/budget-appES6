@@ -6,7 +6,7 @@ export class Expense {
     this.value = value;
     this.percentage = -1;
   }
-
+  // calculate percentage of single item
   calcPercentage(totalIncome) {
     if (totalIncome > 0) {
       this.percentage = Math.round((this.value / totalIncome) * 100);
@@ -14,7 +14,7 @@ export class Expense {
       this.percentage = -1;
     }
   }
-
+  // function that only returns percentage
   getPercentage() {
     return this.percentage;
   }
@@ -88,7 +88,7 @@ export const calculateBudget = () => {
     data.percentage = Math.round((data.totals.exp / data.totals.inc) * 100);
   }
 };
-
+// fucntion that returns the data
 export const getBudgetData = () => {
   return {
     totalBudget: data.totalBudget,
@@ -98,36 +98,31 @@ export const getBudgetData = () => {
   };
 };
 
-// handler responsable for delete item from data.allItems['inc' or 'exp']
+// handler responsable for deleting items from data.allItems['inc' or 'exp']
 export const deleteIncomeExpenseBudgetItemHandler = (type, id) => {
   //delete the item using the splice method
-  //data.allItems[type].splice(id, 1);
+  data.allItems[type].splice(id, 1);
 
-  //delete the item using the filter method
-  // const newData = data.allItems[type].filter((item) => item.id !== id);
-
-  // delete item using map, indexOf, and splice method together
+  // DELETE ITEM USING map, indexOf, AND splice METHOD TOGETHER
   // loop through data.allItems["inc"/""] and return new array with the all ids
-  const ids = data.allItems[type].map((item) => item.id);
-  //console.log("ids", ids);
-  // find the index of the element from ids array with the id of the selected element
-  const indexOf = ids.indexOf(id);
-  //console.log("indexOf", indexOf);
+  // const ids = data.allItems[type].map((item) => item.id);
+  // // find the index of the element from ids array with the id of the selected element
+  // const indexOf = ids.indexOf(id);
+  // //console.log("indexOf", indexOf);
 
-  // if the element exists, delete it from the data.allItems[type] using splice() method
-  if (indexOf !== -1) {
-    data.allItems[type].splice(indexOf, 1);
-  }
+  // // if the element exists, delete it from the data.allItems[type] using splice() method
+  // if (indexOf !== -1) {
+  //   data.allItems[type].splice(indexOf, 1);
+  // }
 };
 
 // calculatePercentage
-
 export const calculatePercentages = () => {
   data.allItems.exp.forEach((currentExpense) => {
     currentExpense.calcPercentage(data.totals.inc);
   });
 };
-
+// get counted percentages
 export const getAllPercentages = () => {
   const allPerc = data.allItems.exp.map((currentExpense) => {
     return currentExpense.getPercentage();
