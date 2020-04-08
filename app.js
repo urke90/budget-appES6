@@ -5,6 +5,7 @@ import {
   clearInputFields,
   displayBudget,
   deleteIncomeExpenseUIItemHandler,
+  displayPercentagesUI,
 } from "./UIController.js";
 import {
   addItem,
@@ -12,6 +13,8 @@ import {
   getBudgetData,
   deleteIncomeExpenseBudgetItemHandler,
   data,
+  calculatePercentages,
+  getAllPercentages,
 } from "./budgetController.js";
 
 // GLOBAL APP CONTROLLER
@@ -25,6 +28,14 @@ const updateBudget = () => {
   // 3. Display the budget on UI
   displayBudget(budgetData);
   console.log(data);
+};
+const updatePercentages = () => {
+  // 1. Calculate percentages
+  calculatePercentages();
+  // 2. Read percentages from the budget contoller
+  const percentages = getAllPercentages();
+  // 3. Update the UI with the new percentage
+  displayPercentagesUI(percentages);
 };
 
 // get input values check them create new income/expense, send the data to UIcontroller clear fields, updateBudget
@@ -50,6 +61,8 @@ const ctrlAddItemHandler = () => {
     clearInputFields();
     // 5. Calculate and update budget
     updateBudget();
+    // 6. Calculate and update percentages
+    updatePercentages();
   }
 };
 
@@ -60,20 +73,23 @@ const ctrlDeleteItemHandler = (event) => {
     event.target.className.includes("inc") ||
     event.target.className.includes("exp")
   ) {
-    const selectedElement = event.target.classList[1];
-    console.log(selectedElement);
-    const selectedElementSplited = event.target.className
-      .split(" ")[1]
-      .split("-");
-    const type = selectedElementSplited[0];
-    const id = parseInt(selectedElementSplited[1]);
-
+    //const selectedElement = event.target.classList[1];
+    //console.log(selectedElement);
+    //const selectedElementSplited = event.target.className
+    //.split(" ")[1]
+    //.split("-");
+    //const type = selectedElementSplited[0];
+    //const id = parseInt(selectedElementSplited[1]);
+    const type = event.target.getAttribute("data-type");
+    const id = event.target.getAttribute("data-id");
     // 1. delete the item fom budget controller
     deleteIncomeExpenseBudgetItemHandler(type, id);
     // 2. delete the item from UI controller
-    deleteIncomeExpenseUIItemHandler(selectedElement);
+    deleteIncomeExpenseUIItemHandler(type, id);
     // 3. Update and show the new budget
     updateBudget();
+    // 4. Calculate and update percentages
+    updatePercentages();
   }
 };
 

@@ -11,6 +11,7 @@ export const DOMstrings = {
   totalExpenseLabel: ".budget__expenses--value",
   totalPercentageLabel: ".budget__expenses--percentage",
   container: ".container",
+  expensePercentageLabel: ".item__percentage",
 };
 
 // gets inupt values for type( expense, income ), description, and amount
@@ -39,7 +40,9 @@ export const addListItemToDOM = (object, type) => {
             <div class="right clearfix">
               <div class="item__value">${object.value}</div>
                 <div class="item__delete">
-                  <button class="item__delete--btn"><i class="ion-ios-close-outline inc-${object.id}"></i></button>
+                  <button class="item__delete--btn">
+                    <i data-type="inc" data-id="${object.id}" class="ion-ios-close-outline inc-${object.id}"></i>
+                  </button>
                 </div>
             </div>
           </div>
@@ -55,7 +58,9 @@ export const addListItemToDOM = (object, type) => {
               <div class="item__value">${object.value}</div>
               <div class="item__percentage">21%</div>
               <div class="item__delete">
-                <button  class="item__delete--btn"><i class="ion-ios-close-outline exp-${object.id}"></i></button>
+                <button  class="item__delete--btn">
+                  <i data-type="exp" data-id="${object.id}" class="ion-ios-close-outline exp-${object.id}"></i>
+                </button>
               </div>
             </div>
           </div>
@@ -93,7 +98,23 @@ export const displayBudget = (dataObj) => {
 };
 
 // delete the exp inc item from the UI
-export const deleteIncomeExpenseUIItemHandler = (id) => {
-  const element = document.querySelector(`#${id}`);
-  element.parentNode.removeChild(element);
+export const deleteIncomeExpenseUIItemHandler = (type, id) => {
+  // select wrapper div for individualt income or expense item and remove it from the DOM
+  const itemWrapper = document.querySelector(`#${type}-${id}`);
+  itemWrapper.parentNode.removeChild(itemWrapper);
+};
+
+export const displayPercentagesUI = (percentages) => {
+  // select all perecentages divs
+  const expItemPercentage = document.querySelectorAll(
+    DOMstrings.expensePercentageLabel
+  );
+  // loop through node list and asigne value for each individual percentage
+  expItemPercentage.forEach((curEl, index) => {
+    if (percentages[index] > 0) {
+      curEl.textContent = `${percentages[index]}%`;
+    } else {
+      curEl.textContent = `---`;
+    }
+  });
 };

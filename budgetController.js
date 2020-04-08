@@ -4,6 +4,19 @@ export class Expense {
     this.id = id;
     this.description = description;
     this.value = value;
+    this.percentage = -1;
+  }
+
+  calcPercentage(totalIncome) {
+    if (totalIncome > 0) {
+      this.percentage = Math.round((this.value / totalIncome) * 100);
+    } else {
+      this.percentage = -1;
+    }
+  }
+
+  getPercentage() {
+    return this.percentage;
   }
 }
 // Income function constructor
@@ -105,4 +118,19 @@ export const deleteIncomeExpenseBudgetItemHandler = (type, id) => {
   if (indexOf !== -1) {
     data.allItems[type].splice(indexOf, 1);
   }
+};
+
+// calculatePercentage
+
+export const calculatePercentages = () => {
+  data.allItems.exp.forEach((currentExpense) => {
+    currentExpense.calcPercentage(data.totals.inc);
+  });
+};
+
+export const getAllPercentages = () => {
+  const allPerc = data.allItems.exp.map((currentExpense) => {
+    return currentExpense.getPercentage();
+  });
+  return allPerc;
 };
