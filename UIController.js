@@ -38,10 +38,12 @@ export const addListItemToDOM = (object, type) => {
           <div class="item clearfix" id="inc-${object.id}">
             <div class="item__description">${object.description}</div>
             <div class="right clearfix">
-              <div class="item__value">${object.value}</div>
+              <div class="item__value">${formatIncExpValue(object.value)}</div>
                 <div class="item__delete">
                   <button class="item__delete--btn">
-                    <i data-type="inc" data-id="${object.id}" class="ion-ios-close-outline inc-${object.id}"></i>
+                    <i data-type="inc" data-id="${
+                      object.id
+                    }" class="ion-ios-close-outline inc-${object.id}"></i>
                   </button>
                 </div>
             </div>
@@ -55,11 +57,13 @@ export const addListItemToDOM = (object, type) => {
           <div class="item clearfix"id="exp-${object.id}">
             <div class="item__description">${object.description}</div>
             <div class="right clearfix">
-              <div class="item__value">${object.value}</div>
+              <div class="item__value">${formatIncExpValue(object.value)}</div>
               <div class="item__percentage">21%</div>
               <div class="item__delete">
                 <button  class="item__delete--btn">
-                  <i data-type="exp" data-id="${object.id}" class="ion-ios-close-outline exp-${object.id}"></i>
+                  <i data-type="exp" data-id="${
+                    object.id
+                  }" class="ion-ios-close-outline exp-${object.id}"></i>
                 </button>
               </div>
             </div>
@@ -81,12 +85,18 @@ export const clearInputFields = () => {
 };
 // display budget to the UI
 export const displayBudget = (dataObj) => {
-  document.querySelector(DOMstrings.totalBudgetLabel).textContent =
-    dataObj.totalBudget;
-  document.querySelector(DOMstrings.totalIncomeLabel).textContent =
-    dataObj.totalInc;
-  document.querySelector(DOMstrings.totalExpenseLabel).textContent =
-    dataObj.totalExp;
+  let type;
+  dataObj.totalBudget > 0 ? (type = "inc") : (type = "exp");
+
+  document.querySelector(
+    DOMstrings.totalBudgetLabel
+  ).textContent = formatIncExpValue(dataObj.totalBudget, type);
+  document.querySelector(
+    DOMstrings.totalIncomeLabel
+  ).textContent = formatIncExpValue(dataObj.totalInc, "inc");
+  document.querySelector(
+    DOMstrings.totalExpenseLabel
+  ).textContent = formatIncExpValue(dataObj.totalExp, "exp");
 
   if (dataObj.percentage > 0) {
     document.querySelector(
@@ -117,4 +127,34 @@ export const displayPercentagesUI = (percentages) => {
       curEl.textContent = `---`;
     }
   });
+};
+
+const formatIncExpValue = (num, type) => {
+  /*
+  + or - before number
+  exactly 2 decimal points
+  comma separating the thousends
+
+  2310.5467 => 2,310.46
+  2000 => + 2,000.00
+  */
+  // convert value to absolute and add .xx ( 2 decimals )
+  num = Math.abs(num).toFixed(2);
+  // split the value on intiger part and decimal part
+  let numSplite = num.split(".");
+
+  let intPart = numSplite[0];
+
+  if (intPart.length > 3) {
+    intPart = `${intPart.substr(0, intPart.length - 3)},${intPart.substr(
+      intPart.length - 3,
+      3
+    )}`; // input 2310, output 2,310
+  }
+
+  let decPart = numSplite[1];
+
+  //return `${type} ${int},${decPart}`;
+
+  return `${type === "exp" ? "-" : "+"} ${intPart}.${decPart}`;
 };
