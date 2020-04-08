@@ -180,3 +180,13 @@ export const displayAccurateDate = () => {
   const month = months[now.getMonth()];
   document.querySelector(DOMstrings.dateLabel).innerHTML = `${month} ${year}`;
 };
+
+export const typeColorHandler = () => {
+  const inputs = document.querySelectorAll(
+    `${DOMstrings.inputType},${DOMstrings.inputDescription}, ${DOMstrings.inputValue}`
+  );
+  inputs.forEach((input) => {
+    input.classList.toggle("red-focus");
+  });
+  document.querySelector(DOMstrings.inputEnterValue).classList.toggle("red");
+};

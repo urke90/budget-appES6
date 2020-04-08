@@ -7,6 +7,7 @@ import {
   deleteIncomeExpenseUIItemHandler,
   displayPercentagesUI,
   displayAccurateDate,
+  typeColorHandler,
 } from "./UIController.js";
 import {
   addItem,
@@ -109,6 +110,10 @@ document.addEventListener("keypress", (event) => {
 document
   .querySelector(DOMstrings.container)
   .addEventListener("click", ctrlDeleteItemHandler);
+
+document
+  .querySelector(DOMstrings.inputType)
+  .addEventListener("change", typeColorHandler);
 
 // init function, reset budget
 export const init = () => {
